@@ -1,6 +1,6 @@
 import pytest
 import sys
-from officepy.officepy import Dir
+from officepy import Dir
 from retweet import Bot
 
 

@@ -4,8 +4,8 @@ from datetime import datetime
 from PIL import Image
 from typing import List, Dict
 from config import Config, QuorumConfig
-from officepy.officepy import Dir, JsonFile, Scrawler
-from rumpy.rumpy import RumClient
+from officepy import Dir, JsonFile, Scrawler
+from rumpy import RumClient
 
 
 class Bot:
