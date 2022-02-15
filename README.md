@@ -8,7 +8,13 @@ update [config.py](./coinfig.py) before running.
 
 ### requirements
 
-```git clone url```
+```sh
+
+pip install -r requirements.txt
+
+```
+
+and install modules:
 
 - officepy: <https://github.com/liujuanjuan1984/officepy>
 - rumpy: <https://github.com/liujuanjuan1984/rumpy>

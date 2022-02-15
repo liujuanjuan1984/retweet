@@ -1,19 +1,12 @@
 import os
 
-BASEDIR = os.path.abspath(os.path.dirname(__file__))
-
 
 class Config:
-    """
-    officepy: https://github.com/liujuanjuan1984/officepy
-    rumpy: https://github.com/liujuanjuan1984/rumpy
-    """
+    BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
-    OFFICEPY_DIR = r"D:\Jupyter\officepy"
-    RUMPY_DIR = r"D:\Jupyter\rumpy"
     DATA_DIR = {
-        "WEIBO": os.path.join(BASEDIR, "..", "..", "weibo"),
-        "TWITTER": os.path.join(BASEDIR, "..", "..", "twitter"),
+        "WEIBO": os.path.join(BASE_DIR, "..", "..", "weibo"),
+        "TWITTER": os.path.join(BASE_DIR, "..", "..", "twitter"),
     }
 
     USERS = {

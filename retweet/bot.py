@@ -1,17 +1,11 @@
 import os
-import sys
-
 from time import sleep
 from datetime import datetime
 from PIL import Image
 from typing import List, Dict
 from config import Config, QuorumConfig
-
-
-sys.path.extend([Config.OFFICEPY_DIR, Config.RUMPY_DIR])
-
-from officepy import Dir, JsonFile, Scrawler
-from rumpy import RumClient
+from officepy.officepy import Dir, JsonFile, Scrawler
+from rumpy.rumpy import RumClient
 
 
 class Bot:
