@@ -3,7 +3,7 @@ from time import sleep
 from datetime import datetime
 from PIL import Image
 from typing import List, Dict
-from config import Config, QuorumConfig
+from retweetconfig import RetweetConfig as FIG
 from officepy import Dir, JsonFile, Scrawler
 from rumpy import RumClient
 
@@ -23,22 +23,22 @@ class Bot:
         driver = driver or Scrawler().driver
 
         for i in range(times):
-            for user in Config.USERS[self.env]:
+            for user in FIG.USERS[self.env]:
                 self._user_news(user, driver)
             sleep(seconds)
 
     def post(self, times=1, seconds=1, rumclient=None):
         """post content to rum group"""
 
-        rumclient = rumclient or RumClient(**QuorumConfig().as_dict)
+        rumclient = rumclient or RumClient(**FIG.CLIENT_PARAMS[self.env])
 
         for i in range(times):
-            for user in Config.USERS[self.env]:
+            for user in FIG.USERS[self.env]:
                 self._post_to_rum(rumclient, user)
             sleep(seconds)
 
     def _get_new_posts(self, driver, url: str, data):
-        for ir in driver.find_elements_by_xpath(Config.PTTN[self.env]["new"]):
+        for ir in driver.find_elements_by_xpath(FIG.PTTN[self.env]["new"]):
             i = ir.get_attribute("href")
             name = url.split("/")[-1]
             if i not in data and name in i and "photo" not in i and "?" not in i:
@@ -46,7 +46,7 @@ class Bot:
         return data
 
     def _user_datafile(self, user):
-        dirpath = os.path.join(Config.DATA_DIR[self.env], user)
+        dirpath = os.path.join(FIG.DATA_DIR[self.env], user)
         Dir(dirpath).check()
         newsfile = os.path.join(dirpath, "news.json")
         return dirpath, newsfile
@@ -56,7 +56,7 @@ class Bot:
         dirpath, newsfile = self._user_datafile(user)
         data = JsonFile(newsfile).read({})
 
-        url = Config.USERS[self.env][user]
+        url = FIG.USERS[self.env][user]
         driver.get(url)
         sleep(20)
         # 读取新内容
@@ -85,9 +85,9 @@ class Bot:
     def _one_post_to_pic(self, driver, pic_filepath: str):
         """read one post ,store post screen png, return post text"""
 
-        text = driver.find_element_by_xpath(Config.PTTN[self.env]["text"]).text
-        post = driver.find_element_by_xpath(Config.PTTN[self.env]["post"])
-        temp_pic = os.path.join(Config.DATA_DIR[self.env], "\\temp.png")
+        text = driver.find_element_by_xpath(FIG.PTTN[self.env]["text"]).text
+        post = driver.find_element_by_xpath(FIG.PTTN[self.env]["post"])
+        temp_pic = os.path.join(FIG.DATA_DIR[self.env], "temp.png")
         driver.save_screenshot(temp_pic)
 
         """计算页面元素的在整个页面上的坐标"""
@@ -112,7 +112,7 @@ class Bot:
             if "push_at" not in data[url]:
                 if "text" in data[url] and "pic" in data[url]:
                     rumclient.group.send_note(
-                        Config.GROUPS[self.env],
+                        FIG.GROUPS[self.env],
                         content=data[url]["text"],
                         image=[data[url]["pic"]],
                     )

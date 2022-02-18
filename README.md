@@ -4,7 +4,7 @@ bot: retweet weibo/twitter to rum groups
 
 ### config
 
-update [config.py](./coinfig.py) before running.
+update [retweetconfig.py](./retweetconfig.py) before running.
 
 ### requirements
 

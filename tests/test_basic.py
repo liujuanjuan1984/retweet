@@ -9,6 +9,6 @@ class TestCase:
         Bot()
 
     def test_basic(self):
-        from config import Config
+        from retweetconfig import RetweetConfig as FIG
 
-        Dir(Config.BASE_DIR).black()
+        Dir(FIG.RETWEET_BASEDIR).black()

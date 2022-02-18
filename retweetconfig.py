@@ -1,12 +1,14 @@
 import os
+from rumpyconfig import RumpyConfig
 
 
-class Config:
-    BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+class RetweetConfig:
+    RETWEET_BASEDIR = os.path.dirname(__file__)
+    print(RETWEET_BASEDIR)
 
     DATA_DIR = {
-        "WEIBO": os.path.join(BASE_DIR, "..", "..", "weibo"),
-        "TWITTER": os.path.join(BASE_DIR, "..", "..", "twitter"),
+        "WEIBO": os.path.join(RETWEET_BASEDIR, "..", "..", "weibo"),
+        "TWITTER": os.path.join(RETWEET_BASEDIR, "..", "..", "twitter"),
     }
 
     USERS = {
@@ -28,24 +30,10 @@ class Config:
         "TWITTER": "d4368f3e-98c4-4dac-8f3f-e64337b8a793",
     }
 
+    GROUP_NAME_WEIBO = "TA们在微博说了啥"
+    GROUP_NAME_TWITTER = "TA们在推特说了啥"
+    CLIENT_PARAMS = RumpyConfig.CLIENT_PARAMS
+
     @staticmethod
     def init_app(app):
         pass
-
-
-class QuorumConfig(Config):
-
-    HOST = "127.0.0.1"
-    PORT = 50415
-    SERVER_CRT_FILEPATH = r"C:\Users\75801\AppData\Local\Programs\prs-atm-app\resources\quorum_bin\certs\server.crt"
-    GROUP_NAME_WEIBO = "TA们在微博说了啥"
-    GROUP_NAME_TWITTER = "TA们在推特说了啥"
-
-    @property
-    def as_dict(self):
-        return {
-            "port": self.PORT,
-            "host": self.HOST,
-            "appid": "peer",
-            "crtfile": self.SERVER_CRT_FILEPATH,
-        }
